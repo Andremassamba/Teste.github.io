@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gerador de Números de Telefone</title>
+</head>
+<body>
+  <h1>Gerador de Números de Telefone</h1>
+  <button onclick="gerarNumero()">Gerar Número</button>
+  <button onclick="copiarNumero()">Copiar Número</button>
+  <button onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
+  <p id="numeroGerado">Aqui será exibido o número gerado.</p>
+
+  <script>
+    let numeroCopiado = "";
+
+    function gerarNumero() {
+      const prefixosPermitidos = ["82", "83", "84", "85", "86", "87"];
+      const prefixo = prefixosPermitidos[Math.floor(Math.random() * prefixosPermitidos.length)];
+      const numeroRestante = Math.floor(100000000 + Math.random() * 900000000);
+      const numeroCompleto = prefixo + numeroRestante.toString().slice(0, 7);
+
+      document.getElementById("numeroGerado").innerText = "Número Gerado: " + numeroCompleto;
+      numeroCopiado = numeroCompleto;
+    }
+
+    function copiarNumero() {
+      const numeroParaCopiar = document.createElement("textarea");
+      numeroParaCopiar.value = numeroCopiado;
+      document.body.appendChild(numeroParaCopiar);
+      numeroParaCopiar.select();
+      document.execCommand("copy");
+      document.body.removeChild(numeroParaCopiar);
+      alert("Número copiado para a área de transferência!");
+    }
+
+    function enviarWhatsApp() {
+      if (numeroCopiado) {
+        const mensagem = `Olá! Meu número de WhatsApp é: ${numeroCopiado}. Vamos conversar!`;
+        const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
+        window.open(url, "_blank");
+      } else {
+        alert("Por favor, gere um número antes de enviar pelo WhatsApp.");
+      }
+    }
+  </script>
+</body>
+</html>
